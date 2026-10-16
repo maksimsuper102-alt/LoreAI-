@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#082b1b">
+<meta name="description" content="LoreAI — лёгкое пространство для ролевых историй и персонажей.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>L.AI — LoreAI</title>
+<style>
+:root{--bg:#07140f;--panel:#0d2118;--panel2:#132b20;--text:#eef8f0;--muted:#a4b8aa;--accent:#3bd477;--line:#244534;--bubble:#153525;--user:#174e32}
+[data-theme="light"]{--bg:#eef5ef;--panel:#fff;--panel2:#e2eee4;--text:#14271a;--muted:#5c7061;--accent:#168747;--line:#c7d9cb;--bubble:#e4eee6;--user:#c9f0d5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 13px}button:hover{border-color:var(--accent)}button.primary{background:var(--accent);color:#052011;border:0;font-weight:700}
+.app{height:100dvh;display:grid;grid-template-columns:285px 1fr;max-width:1400px;margin:auto}.sidebar{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:16px;gap:12px;min-height:0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:850;font-size:21px;letter-spacing:.5px}.logo{width:43px;height:43px;border-radius:12px;display:grid;place-items:center;background:#062516;border:1px solid #1b6d3c;color:#9dffb8;font-weight:900;box-shadow:0 0 22px #1a9e4a33}.sub{color:var(--muted);font-size:12px}.sidebar-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.chatlist{overflow:auto;display:flex;flex-direction:column;gap:6px}.chatitem{display:flex;align-items:center;gap:9px;text-align:left;width:100%;background:transparent;border-color:transparent;padding:10px}.chatitem.active{background:var(--panel2);border-color:var(--line)}.avatar{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#17452b,#0b2418);display:grid;place-items:center;font-weight:800;color:#9ff5b5;flex-shrink:0}.chatmeta{min-width:0}.chatname{font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chatdesc{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sidebottom{margin-top:auto;display:grid;gap:8px}.main{min-width:0;display:flex;flex-direction:column;min-height:0}.topbar{display:flex;align-items:center;gap:10px;padding:15px 20px;border-bottom:1px solid var(--line);background:var(--bg)}.topinfo{flex:1;min-width:0}.topinfo strong{display:block;font-size:16px}.topinfo span{color:var(--muted);font-size:12px}.scroll{flex:1;overflow:auto;padding:22px max(18px,calc((100% - 800px)/2));display:flex;flex-direction:column;gap:16px}.welcome{margin:auto;text-align:center;max-width:520px;padding:25px}.welcome .biglogo{font-size:52px;color:var(--accent);font-weight:900;letter-spacing:2px}.welcome h1{margin:5px 0}.welcome p{color:var(--muted)}.msg{display:flex;gap:10px;max-width:760px;align-self:flex-start}.msg.user{align-self:flex-end;flex-direction:row-reverse}.msg .face{width:34px;height:34px;flex-shrink:0;border-radius:10px;background:var(--panel2);display:grid;place-items:center;font-weight:800}.msg.user .face{background:var(--user)}.content{background:var(--bubble);border:1px solid var(--line);padding:11px 14px;border-radius:5px 15px 15px 15px;white-space:pre-wrap;overflow-wrap:anywhere}.msg.user .content{border-radius:15px 5px 15px 15px;background:var(--user)}.content .sender{font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:700}.composer-wrap{padding:12px 18px 16px;border-top:1px solid var(--line)}.composer{max-width:800px;margin:auto;display:flex;gap:9px;align-items:flex-end;background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:9px}.composer textarea{flex:1;resize:none;max-height:150px;min-height:42px;border:0;outline:0;background:transparent;color:var(--text);padding:10px}.hint{max-width:800px;margin:7px auto 0;color:var(--muted);font-size:11px}.mobile-menu{display:none}.modalback{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;padding:16px;z-index:5}.modalback.show{display:flex}.modal{width:min(560px,100%);max-height:90dvh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 20px 70px #0007}.modalhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.modal h2{font-size:20px;margin:0}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:13px;color:var(--muted)}.field input,.field textarea,.field select{width:100%;padding:11px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text)}.field textarea{min-height:76px;resize:vertical}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.rowbuttons{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px}.settingnote{color:var(--muted);font-size:12px}.empty{color:var(--muted);text-align:center;padding:15px;font-size:13px}
+@media(max-width:720px){.app{grid-template-columns:1fr}.sidebar{display:none;position:fixed;inset:0 18% 0 0;z-index:4;box-shadow:0 0 0 100vmax #0008}.sidebar.open{display:flex}.mobile-menu{display:inline-block}.topbar{padding:11px 12px}.scroll{padding:18px 13px}.composer-wrap{padding:10px}.grid2{grid-template-columns:1fr}.welcome .biglogo{font-size:44px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><div class="logo">L.AI</div><div>LoreAI<div class="sub">Твоя ролевая вселенная</div></div></div>
+  <div class="sidebar-actions"><button class="primary" id="newChat">＋ Новый чат</button><button id="newCharacter">＋ Персонаж</button></div>
+  <div class="sub">ТВОИ ЧАТЫ</div><div class="chatlist" id="chatlist"></div>
+  <div class="sidebottom"><button id="settingsBtn">⚙ Настройки</button><div class="sub">Бесплатный прототип · без аккаунта</div></div>
+</aside>
+<main class="main">
+  <header class="topbar"><button class="mobile-menu" id="menuBtn">☰</button><div class="avatar" id="topAvatar">L</div><div class="topinfo"><strong id="topName">Добро пожаловать в L.AI</strong><span id="topDesc">Создай персонажа или начни новый чат</span></div><button id="chatOptions">⋯</button></header>
+  <section class="scroll" id="messages">
+    <div class="welcome"><div class="biglogo">L.AI</div><h1>Твоя история. Твои правила.</h1><p>Создавай персонажей, смешивай фандомы и веди отдельные сюжетные ветки. Этот прототип сохраняет чаты на устройстве.</p><button class="primary" id="welcomeCreate">Создать персонажа</button></div>
+  </section>
+  <div class="composer-wrap"><div class="composer"><textarea id="messageInput" rows="1" placeholder="Напиши сообщение..."></textarea><button id="syntaxHelp" title="Что означают символы?">?</button><button class="primary" id="sendBtn">➤</button></div><div class="hint">*действие* · "мысль" · ((подсказка ИИ)) · ИИ: бесплатная локальная модель загружается в настройках.</div></div>
+</main>
+</div>
+<div class="modalback" id="modalback"><div class="modal"><div class="modalhead"><h2 id="modalTitle">Настройки</h2><button id="closeModal">✕</button></div><div id="modalBody"></div></div></div>
+<script>
+const $=id=>document.getElementById(id);
+const KEY='loreai-prototype-v1';
+let state=load();
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{theme:'dark',style:'ordinary',filter:'story',swearing:true,chats:[],characters:[],tutorialSeen:false}}catch(e){return {theme:'dark',style:'ordinary',filter:'story',swearing:true,chats:[],characters:[],tutorialSeen:false}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function active(){return state.chats.find(c=>c.id===state.activeId)}
+function applyTheme(){document.documentElement.dataset.theme=state.theme==='light'?'light':'dark'}
+function createChat(characterId=null,title='Новый сюжет'){const ch=state.characters.find(x=>x.id===characterId);const c={id:id(),title:ch?ch.name:title,characterId,role:'Ты',messages:[],created:Date.now(),branch:'Основная ветка'};state.chats.unshift(c);state.activeId=c.id;save();render()}
+const tutorialSteps=[
+{title:'Добро пожаловать в LoreAI!',text:'Создавай персонажей, веди отдельные сюжетные ветки и играй в одиночку или с друзьями.',example:'Твоя история. Твои персонажи. Твои правила.'},
+{title:'Действия персонажей',text:'Заключай действие между звёздочками. Это описание происходящего, а не реплика вслух.',example:'*Декстер медленно открыл дверь.*'},
+{title:'Внутренние мысли',text:'Мысли доступны автору и ИИ, но не должны автоматически становиться известны другим персонажам или игрокам.',example:'"Кажется, он что-то скрывает."'},
+{title:'Речь и мультидиалог',text:'Обычный текст — произнесённые слова. Для нескольких персонажей указывай имя перед каждой репликой.',example:'Альфа1: Куда он делся?\nАльфа2: Не знаю.\nБета4: Он где-то тут.'},
+{title:'Скрытая подсказка ИИ',text:'Двойные круглые скобки — служебная подсказка для нейросети, не обычная речь персонажей.',example:'((За дверью кто-то прячется. Персонажи пока этого не знают.))'},
+{title:'Группы и настройки',text:'По плану LoreAI поддерживает до 15 ИИ-персонажей и до 3 игроков в комнате. В этом прототипе это пока настройки-концепция, не настоящий онлайн-мультиплеер.',example:'Начни с персонажа, затем открой ⋯ у чата или настройки.'}
+];
+function openTutorial(){let step=0;const finish=()=>{state.tutorialSeen=true;save();closeModal()};const draw=()=>{const x=tutorialSteps[step];modal('Обучение LoreAI',`<div class="sub">Шаг ${step+1} из ${tutorialSteps.length}</div><h3 style="margin:10px 0">${x.title}</h3><p>${x.text}</p><div class="field"><label>Пример</label><textarea readonly>${x.example}</textarea></div><div class="rowbuttons"><button id="tutorialSkip">Пропустить</button>${step?'<button id="tutorialBack">Назад</button>':''}<button class="primary" id="tutorialNext">${step===tutorialSteps.length-1?'Завершить':'Далее →'}</button></div>`);$('tutorialSkip').onclick=finish;if(step)$('tutorialBack').onclick=()=>{step--;draw()};$('tutorialNext').onclick=()=>{if(step<tutorialSteps.length-1){step++;draw()}else finish()}};draw()}
+function openSyntaxHelp(){modal('Как писать в LoreAI',`<h3>Действия</h3><p><code>*персонаж открыл дверь*</code></p><p>ИИ учитывает действие как событие сцены.</p><h3>Мысли</h3><p><code>"Он мне не доверяет."</code></p><p>Мысль не слышна другим персонажам. В мультиплеере приватность зависит от будущей реализации сервера.</p><h3>Скрытая подсказка ИИ</h3><p><code>((За дверью кто-то есть))</code></p><p>Служебный контекст для ИИ, не реплика персонажа.</p><h3>Несколько персонажей</h3><p><code>Альфа1: Куда он делся?\nАльфа2: Не знаю.\nБета4: Он где-то тут.</code></p><p>Планируемый лимит: до 15 ИИ-персонажей и до 3 игроков. Сейчас это демонстрационный прототип.</p><div class="rowbuttons"><button class="primary" id="syntaxClose">Понятно</button></div>`);$('syntaxClose').onclick=closeModal}
+function render(){applyTheme();renderList();renderChat()}
+function renderList(){const list=$('chatlist');list.innerHTML='';if(!state.chats.length){list.innerHTML='<div class="empty">Пока нет чатов.<br>Создай первый сюжет.</div>';return}for(const c of state.chats){const ch=state.characters.find(x=>x.id===c.characterId);const b=document.createElement('button');b.className='chatitem'+(c.id===state.activeId?' active':'');b.innerHTML=`<div class="avatar">${esc((ch?.name||c.title).slice(0,1))}</div><div class="chatmeta"><div class="chatname">${esc(c.title)}</div><div class="chatdesc">${esc(ch?.fandom||c.branch||'Своя история')}</div></div>`;b.onclick=()=>{state.activeId=c.id;save();render();$('sidebar').classList.remove('open')};list.appendChild(b)}}
+function renderChat(){const c=active();$('messages').innerHTML='';if(!c){$('topAvatar').textContent='L';$('topName').textContent='Добро пожаловать в L.AI';$('topDesc').textContent='Создай персонажа или начни новый чат';$('chatOptions').disabled=true;$('messages').innerHTML='<div class="welcome"><div class="biglogo">L.AI</div><h1>Твоя история. Твои правила.</h1><p>Создавай персонажей, смешивай фандомы и веди отдельные сюжетные ветки.</p><button class="primary" onclick="openCharacter()">Создать персонажа</button></div>';return}
+$('chatOptions').disabled=false;const ch=state.characters.find(x=>x.id===c.characterId);$('topAvatar').textContent=(ch?.name||c.title).slice(0,1);$('topName').textContent=c.title;$('topDesc').textContent=(ch?ch.fandom+' · '+ch.role:'Своя история')+' · отдельная память чата';
+if(!c.messages.length){const w=document.createElement('div');w.className='welcome';w.innerHTML=`<div class="biglogo">L.AI</div><h1>${esc(c.title)}</h1><p>${ch?esc(ch.description||'Персонаж готов к истории.'):'Начни свою историю. Сообщения сохраняются только в этом чате.'}</p><button class="primary" id="startPrompt">Начать историю</button>`;$('messages').appendChild(w);$('startPrompt').onclick=()=>{$('messageInput').value='Начнём историю. Представь сцену и отыгрывай своего персонажа.';$('messageInput').focus()};return}
+for(const m of c.messages){const row=document.createElement('div');row.className='msg '+(m.role==='user'?'user':'');row.innerHTML=`<div class="face">${m.role==='user'?'Я':esc((ch?.name||'L.AI').slice(0,1))}</div><div class="content"><div class="sender">${m.role==='user'?'Ты':esc(ch?.name||'L.AI')}</div>${esc(m.text)}</div>`;$('messages').appendChild(row)}$('messages').scrollTop=$('messages').scrollHeight}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function normalizeTypos(s){return s.replace(/\s+/g,' ').trim().replace(/\bпаймал\b/gi,'поймал').replace(/\bубицы\b/gi,'убийцу').replace(/\bвстртил\b/gi,'встретил').replace(/\bперсанажа\b/gi,'персонажа').replace(/\bперсанаж\b/gi,'персонаж').replace(/\bхарактерр\b/gi,'характер').replace(/\bДекстр\b/gi,'Декстер')}
+let localGenerator=null, localAIState='not-loaded', localAIImport=null;
+let localAIStatusText='модель ещё не загружена.';
+const LOCAL_MODEL='onnx-community/Qwen2.5-0.5B-Instruct';
+function setAIStatus(text){
+ localAIStatusText=text;
+ const el=$('aiStatus');
+ if(el)el.textContent='Статус: '+text;
+}
+async function loadLocalAI(){
+ if(localGenerator){localAIState='ready';setAIStatus('готова. Генерация выполняется на этом устройстве; API-ключ не нужен.');return}
+ if(localAIImport){setAIStatus('загрузка всё ещё идёт. Не закрывай страницу; если это сообщение не меняется несколько минут, проверь интернет и перезагрузи страницу.');return localAIImport}
+ localAIState='loading';
+ setAIStatus('подключаем движок ИИ. Если загрузка не начнётся, статус покажет причину.');
+ localAIImport=(async()=>{
+  let lastProgressAt=Date.now();
+  const stalledTimer=setInterval(()=>{
+   if(localAIState==='loading' && Date.now()-lastProgressAt>45000)
+    setAIStatus('загрузка продолжается без новых данных более 45 секунд. Проверь интернет/VPN; можно перезагрузить страницу и попробовать снова.');
+  },5000);
+  try{
+   setAIStatus('подключаем движок Transformers.js…');
+   const mod=await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.2');
+   const device=(navigator.gpu?'webgpu':'wasm');
+   setAIStatus('загружаем модель '+LOCAL_MODEL+' ('+device+'). При первом запуске может скачиваться несколько файлов.');
+   localGenerator=await mod.pipeline('text-generation',LOCAL_MODEL,{
+    device,dtype:'q4',
+    progress_callback:(p)=>{
+     lastProgressAt=Date.now();
+     if(p){
+      const file=p.file||p.name||'файл модели';
+      const pct=Number.isFinite(p.progress)?' · '+Math.round(p.progress)+'%':'';
+      if(p.status==='progress'||p.status==='download')
+       setAIStatus('скачиваем файлы модели: '+file+pct);
+      else if(p.status==='done')
+       setAIStatus('файл загружен: '+file+'. Инициализируем модель…');
+     }
+    }
+   });
+   localAIState='ready';
+   setAIStatus('готова. Генерация выполняется на этом устройстве; API-ключ не нужен.');
+  }catch(e){
+   localGenerator=null;localAIState='error';
+   const msg=(e&&e.message)?e.message:String(e);
+   setAIStatus('ошибка загрузки: '+msg.slice(0,240)+'. Проверь интернет, память телефона и поддержку браузера.');
+   throw e;
+  }finally{
+   clearInterval(stalledTimer);
+   localAIImport=null;
+  }
+ })();
+ return localAIImport;
+}
+function unloadLocalAI(){localGenerator=null;localAIState='not-loaded';localAIImport=null;setAIStatus('модель выгружена из памяти. Скачанные файлы могут остаться в кеше браузера.')}
+function buildPrompt(c,ch){
+ const history=(c.messages||[]).slice(-12).map(m=>(m.role==='user'?'Пользователь':(ch?.name||'LoreAI'))+': '+m.text).join('\\n');
+ const style={bold:'Пиши дерзко и прямо, спорь аргументированно, если это уместно.',ordinary:'Общайся естественно и поддерживай последовательность сюжета.',warm:'Будь тёплым, бережным и поддерживающим.',romantic:'Веди художественную романтическую сцену без выхода из роли.'}[state.style]||'Общайся естественно.';
+ const filter={soft:'Сохраняй мягкий тон и избегай чрезмерно мрачных деталей.',story:'Следуй художественному сюжету и действиям персонажей.',dark:'Допускай мрачную атмосферу в рамках вымышленной истории, без натуралистичных подробностей.'}[state.filter]||'';
+ return `Ты — движок ролевой игры LoreAI. Отвечай по-русски и продолжай сцену, не пересказывай правила.\\nСтиль: ${style}\\nНастройка сюжета: ${filter}\\nМат персонажей: ${state.swearing?'разрешён по контексту':'не используй мат'}.\\nПерсонаж: ${ch?ch.name:'рассказчик LoreAI'}. Вселенная: ${ch?.fandom||'авторская история'}. Пол/местоимения: ${ch?.gender||'не указаны'}. Внешность: ${ch?.looks||'не указана'}. Характер: ${ch?.personality||''}. Биография: ${ch?.bio||''}. Описание: ${ch?.description||''}.\\nПравила синтаксиса: *...* — действие; "..." — внутренняя мысль, не раскрывай её другим персонажам; ((...)) — подсказка для ИИ, не цитируй её вслух; Имя: реплика — отдельный голос персонажа. Учитывай историю, не управляй решениями пользователя.\\nИстория чата:\\n${history}\\n${ch?.name||'LoreAI'}:`;
+}
+async function generateReply(c,ch){
+ if(!localGenerator)await loadLocalAI();
+ const prompt=buildPrompt(c,ch);
+ const out=await localGenerator(prompt,{max_new_tokens:220,temperature:0.8,do_sample:true,top_p:0.9,repetition_penalty:1.12});
+ let text=Array.isArray(out)?(out[0]?.generated_text||''):(out?.generated_text||String(out||''));
+ if(text.startsWith(prompt))text=text.slice(prompt.length);
+ text=text.trim();
+ return text||'*Персонаж на мгновение задумывается, подбирая слова.*';
+}
+async function send(){
+ const text=normalizeTypos($('messageInput').value);if(!text)return;if(!active())createChat();
+ const c=active();c.messages.push({role:'user',text,at:Date.now()});$('messageInput').value='';save();renderChat();
+ const pending={role:'assistant',text:'Загружаю локальную нейросеть или генерирую ответ…',at:Date.now(),pending:true};c.messages.push(pending);renderChat();
+ try{
+  const ch=state.characters.find(x=>x.id===c.characterId);
+  const reply=await generateReply(c,ch);
+  const idx=c.messages.indexOf(pending);if(idx>=0)c.messages[idx]={role:'assistant',text:reply,at:Date.now()};
+ }catch(e){
+  const idx=c.messages.indexOf(pending);const fallback='Не удалось запустить локальную модель. Открой ⚙ Настройки и проверь статус загрузки. Если там написано «готова», но ответ не создаётся, это ошибка генерации, а не подключения. Подробности: '+(e?.message||String(e)).slice(0,240);
+  if(idx>=0)c.messages[idx]={role:'assistant',text:fallback,at:Date.now()};
+ }
+ save();if(state.activeId===c.id)renderChat();renderList();
+}
+function modal(title,html){$('modalTitle').textContent=title;$('modalBody').innerHTML=html;$('modalback').classList.add('show')}
+function openCharacter(){modal('Создать персонажа',`<div class="field"><label>Имя персонажа</label><input id="charName" placeholder="Например, Джон"></div><div class="grid2"><div class="field"><label>Фандом / вселенная</label><input id="charFandom" placeholder="Например, Декстер"></div><div class="field"><label>Пол / местоимения</label><input id="charGender" placeholder="Например, мужской, он"></div></div><div class="field"><label>Внешность</label><textarea id="charLooks" placeholder="Как выглядит персонаж"></textarea></div><div class="field"><label>Характер и манера речи</label><textarea id="charPersonality" placeholder="Саркастичный, спокойный, вспыльчивый..."></textarea></div><div class="field"><label>Биография и роль в сюжете</label><textarea id="charBio" placeholder="Прошлое, цели, отношения с другими героями"></textarea></div><div class="field"><label>Описание персонажа (собирается автоматически)</label><textarea id="charDescription" placeholder="Можно заполнить вручную или оставить пустым"></textarea></div><div class="rowbuttons"><button id="cancelChar">Отмена</button><button class="primary" id="saveChar">Создать персонажа</button></div>`);$('cancelChar').onclick=closeModal;$('saveChar').onclick=()=>{const name=$('charName').value.trim();if(!name){$('charName').focus();return}const ch={id:id(),name,fandom:$('charFandom').value.trim()||'Своя вселенная',gender:$('charGender').value.trim(),looks:$('charLooks').value.trim(),personality:$('charPersonality').value.trim(),bio:$('charBio').value.trim(),description:$('charDescription').value.trim()};if(!ch.description)ch.description=[ch.name+' — '+ch.fandom,ch.gender?'Пол / местоимения: '+ch.gender:'',ch.looks?'Внешность: '+ch.looks:'',ch.personality?'Характер: '+ch.personality:'',ch.bio?'Биография: '+ch.bio:''].filter(Boolean).join('\\n');state.characters.unshift(ch);save();closeModal();createChat(ch.id);}}
+function openSettings(){modal('Настройки',`<div class="field"><label>Тема оформления</label><select id="themeSelect"><option value="dark">Тёмная</option><option value="light">Светлая</option></select></div><div class="field"><label>Стиль общения</label><select id="styleSelect"><option value="bold">Дерзкий</option><option value="ordinary">Обычный</option><option value="warm">Тёплый</option><option value="romantic">Романтический</option></select></div><div class="field"><label>Интенсивность художественного сюжета</label><select id="filterSelect"><option value="soft">Мягкий</option><option value="story">Свободный сюжет</option><option value="dark">Тёмный сюжет</option></select></div><div class="field"><label><input type="checkbox" id="swearingSelect" style="width:auto"> Разрешить мат персонажам</label></div><div class="field"><label>Локальная нейросеть</label><p class="settingnote">Бесплатная модель запускается в браузере на твоём устройстве. При первой загрузке понадобится интернет и свободное место; дальше веса могут кешироваться браузером. Поддержка зависит от браузера и мощности телефона.</p><div class="rowbuttons"><button id="loadLocalAI" class="primary">Загрузить бесплатную модель</button><button id="unloadLocalAI">Выгрузить модель</button></div><div id="aiStatus" class="settingnote">Статус: модель ещё не загружена.</div></div><div class="rowbuttons"><button id="showTutorial">Показать обучение снова</button><button id="showSyntax">Шпаргалка по символам</button></div><div class="rowbuttons"><button id="exportBackup">Экспортировать резервную копию</button><button id="importBackup">Импортировать копию</button><input id="backupFile" type="file" accept="application/json,.json" hidden></div><p class="settingnote">Чаты хранятся локально в браузере этого устройства. Экспортируй резервную копию перед очисткой данных или сменой браузера. Для установки как PWA сайт должен открываться по HTTPS. Параметры сохраняются на этом устройстве. Локальная модель загружается отдельно и не требует платного API. Её веса могут занимать сотни мегабайт; размер зависит от модели и формата. Для работы нужна поддержка WebGPU либо более медленный режим WASM.</p><div class="rowbuttons"><button id="clearData">Удалить локальные данные</button><button class="primary" id="saveSettings">Сохранить</button></div>`);$('themeSelect').value=state.theme;$('styleSelect').value=state.style;$('filterSelect').value=state.filter;$('swearingSelect').checked=state.swearing;$('saveSettings').onclick=()=>{state.theme=$('themeSelect').value;state.style=$('styleSelect').value;state.filter=$('filterSelect').value;state.swearing=$('swearingSelect').checked;save();closeModal();render()};$('loadLocalAI').onclick=async()=>{try{await loadLocalAI()}catch(e){}};$('unloadLocalAI').onclick=unloadLocalAI;setAIStatus(localAIStatusText);$('showTutorial').onclick=()=>openTutorial();$('showSyntax').onclick=()=>openSyntaxHelp();$('exportBackup').onclick=exportBackup;$('importBackup').onclick=()=>$('backupFile').click();$('backupFile').onchange=importBackup;$('clearData').onclick=()=>{if(confirm('Удалить все чаты и персонажей с этого устройства?')){localStorage.removeItem(KEY);state=load();closeModal();render()}}}
+function exportBackup(){const blob=new Blob([JSON.stringify({format:'LoreAI-backup',version:1,exportedAt:new Date().toISOString(),state},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='LoreAI-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(url)}
+function importBackup(e){const file=e.target.files&&e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);const incoming=data.state;if(!incoming||!Array.isArray(incoming.chats)||!Array.isArray(incoming.characters))throw new Error('invalid');if(!confirm('Импорт заменит текущие чаты и персонажей данными из копии. Продолжить?'))return;state={...incoming,tutorialSeen:true};save();closeModal();render();alert('Резервная копия импортирована на это устройство.')}catch(err){alert('Не удалось прочитать копию LoreAI. Текущие данные не изменены.')}finally{e.target.value=''}};reader.readAsText(file)}
+function closeModal(){$('modalback').classList.remove('show')}
+$('newChat').onclick=()=>{if(state.characters.length){modal('Новый чат',`<p>Выбери персонажа для новой независимой сюжетной ветки.</p><div class="field"><label>Персонаж</label><select id="pickChar"><option value="">Без персонажа / новая история</option>${state.characters.map(c=>`<option value="${c.id}">${esc(c.name)} · ${esc(c.fandom)}</option>`).join('')}</select></div><div class="field"><label>Название этой сюжетной ветки</label><input id="branchName" placeholder="Например, Альтернативная история"></div><div class="rowbuttons"><button id="cancelNew">Отмена</button><button class="primary" id="makeNew">Создать чат</button></div>`);$('cancelNew').onclick=closeModal;$('makeNew').onclick=()=>{const cid=$('pickChar').value||null;const title=$('branchName').value.trim()||(cid?state.characters.find(x=>x.id===cid).name:'Новый сюжет');closeModal();createChat(cid,title)}}else createChat(null,'Новый сюжет')};
+$('newCharacter').onclick=openCharacter;$('welcomeCreate').onclick=openCharacter;$('settingsBtn').onclick=openSettings;$('closeModal').onclick=closeModal;$('modalback').onclick=e=>{if(e.target===$('modalback'))closeModal()};$('syntaxHelp').onclick=openSyntaxHelp;$('sendBtn').onclick=send;$('messageInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}});$('menuBtn').onclick=()=>$('sidebar').classList.toggle('open');
+$('chatOptions').onclick=()=>{const c=active();if(!c)return;modal('Параметры чата',`<div class="field"><label>Название ветки</label><input id="renameChat" value="${esc(c.title)}"></div><div class="field"><label>Кто ты в этой истории?</label><input id="roleChat" value="${esc(c.role||'Ты')}" placeholder="Например, Джон, друг Декстера"></div><div class="grid2"><div class="field"><label>Игроков в комнате (план)</label><select id="playerLimit"><option value="1">1 игрок</option><option value="2">2 игрока</option><option value="3">3 игрока</option></select></div><div class="field"><label>ИИ-персонажей (план)</label><select id="aiLimit">${Array.from({length:15},(_,i)=>`<option value="${i+1}">${i+1} персонаж(ей)</option>`).join('')}</select></div></div><p class="settingnote">Лимиты до 3 игроков и до 15 ИИ-персонажей — настройки будущей версии. Онлайн-комнаты ещё не подключены. Каждый чат хранит собственную историю.</p><div class="rowbuttons"><button id="deleteChat">Удалить чат</button><button id="saveChat" class="primary">Сохранить</button></div>`);$('playerLimit').value=String(c.playerLimit||1);$('aiLimit').value=String(c.aiLimit||1);$('saveChat').onclick=()=>{c.playerLimit=Number($('playerLimit').value);c.aiLimit=Number($('aiLimit').value);c.title=$('renameChat').value.trim()||c.title;c.role=$('roleChat').value.trim()||'Ты';save();closeModal();render()};$('deleteChat').onclick=()=>{if(confirm('Удалить этот чат?')){state.chats=state.chats.filter(x=>x.id!==c.id);state.activeId=state.chats[0]?.id||null;save();closeModal();render()}}};
+if(!state.chats.length&&state.characters.length===0){}else if(!state.activeId&&state.chats.length)state.activeId=state.chats[0].id;
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+if(!state.tutorialSeen){setTimeout(openTutorial,350)}
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "LoreAI",
+  "short_name": "LoreAI",
+  "description": "Лёгкое пространство для ролевых историй и персонажей",
+  "lang": "ru",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#07140f",
+  "theme_color": "#082b1b",
+  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
